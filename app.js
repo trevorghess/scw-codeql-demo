@@ -4,7 +4,8 @@ const port = 3000
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/foo/:id', (req, res) => {
-    res.send('Hello world!')
+    eval(`console.log("Code injection vulnerability here: ${req.params.id}")`);
+    res.send(`Hello XSS: ${req.params.id}`)
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
