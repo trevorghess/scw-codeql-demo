@@ -43,56 +43,11 @@ jobs:
       uses: actions/checkout@v3
 
     # Initializes the CodeQL tools for scanning.
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
-
-        # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
-
-
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
-
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-
-    #   If the Autobuild fails above, remove it and uncomment the following three lines.
-    #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
-
-    # - run: |
-    #   echo "Run, Build Application using script"
-    #   ./location_of_script_within_repo/buildscript.sh
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
-      with:
-        category: "/language:${{matrix.language}}"
-        upload: "never"
-          
-    - name: Add Secure Code Warrior contextual training to SARIF
-      # You may pin to the exact commit or the version.
-      # uses: SecureCodeWarrior/github-action-add-sarif-contextual-training@b11b7dee40de861daa61af5095eb6077d57716c0
-      uses: SecureCodeWarrior/github-action-add-sarif-contextual-training@v1.0.1
-      with:
-        # Relative location of SARIF file to process change ../results/ if overriding in analyze step
-        # inputSarifFile: ../results/${{ needs.analyze.outputs.sarif_id }}.sarif
-        inputSarifFile: /home/runner/work/_temp/codeql-intermediate-results.sarif
-        # Relative destination location for processed SARIF file
-        outputSarifFile: processed.sarif
-        # Provide `secrets.GITHUB_TOKEN` to use the GitHub access token automatically supplied by GitHub Workflows
-        githubToken: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: processed.sarif
+        sarif_file: test.sarif
         
     - name: Does the file do
       run: echo "$(cat processed.sarif)"
