@@ -87,7 +87,8 @@ jobs:
       uses: SecureCodeWarrior/github-action-add-sarif-contextual-training@v1.0.1
       with:
         # Relative location of SARIF file to process change ../results/ if overriding in analyze step
-        inputSarifFile: ../results/${{ needs.analyze.outputs.sarif_id }}.sarif
+        # inputSarifFile: ../results/${{ needs.analyze.outputs.sarif_id }}.sarif
+        inputSarifFile: /home/runner/work/_temp/codeql-intermediate-results.sarif
         # Relative destination location for processed SARIF file
         outputSarifFile: processed.sarif
         # Provide `secrets.GITHUB_TOKEN` to use the GitHub access token automatically supplied by GitHub Workflows
